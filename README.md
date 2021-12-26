@@ -8,8 +8,11 @@ Shellstation is a C2 (coomand and control) tool for managing malware sessions. F
 # Dependencies
 This tool is meant to run on a linux system and it depends on the python library pycryptodome to run smoothly. Please make sure you install that library with the following command:
 > pip install pycryptodome<BR>
+  
 OR<BR>
+
 > pip3 install pycrpytodome<BR>
+
 It should also be noted that shellstation is coded in python3.
 
 # Server mode
