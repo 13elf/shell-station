@@ -24,7 +24,7 @@ NOTE: All the commands explained in server mode section can be run after a succe
 
 ## How to register a client
 We previously taked about authentication. Before authentication can take place, there needs to be some clients already registered in our server. In order to register a client, the program should be started in CLI mode (explained below) and register command needs to be run. The rest of this process is straightforward. The program asks for a username, password and the role of the client. After registering the client, a file called database will be created where the username, sha256 hash of the password and the role of the client is present. As more clients are added, new lines get written to the file. Aside from doing this in cli mode, it can also be done through an admin user after a successful authentication. However if it's your first time and you dont have any users, you should create the user using cli mode.
-> register jhon mystrongpass a (server mode) <BR>
+> register john mystrongpass a (server mode) <BR>
 > register (cli mode, interactive)
 
 ## How to connect to the server
