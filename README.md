@@ -13,12 +13,18 @@ NOTE: All the commands explained in server mode section can be run after a succe
 
 ## How to register a client
 We previously taked about authentication. Before authentication can take place, there needs to be some clients already registered in our server. In order to register a client, the program should be started in CLI mode (explained below) and register command needs to be run. The rest of this process is straightforward. The program asks for a username, password and the role of the client. After registering the client, a file called database will be created where the username, sha256 hash of the password and the role of the client is present. As more clients are added, new lines get written to the file. Aside from doing this in cli mode, it can also be done through an admin user after a successful authentication. However if it's your first time and you dont have any users, you should create the user using cli mode.
+> register jhon mystrongpass a (server mode)
+> register (cli mode, interactive)
 
 ## How to connect to the server
 The script named "client.py" peforms authentication to the server. This script takes two positional command line arugments with the first one being the server IP and the second one being the port for authentication (specified by -p when starting the program in server mode). It asks for a username and a password. When user enters the credentials, they go to the server in an encrypted way and get decrypted on the server side. The server takes the sha256 hash of the password and compares it to the saved hash in the database. If the username and passwords match, the client gets authenticated successfully.
+> python3 client.py 127.0.0.1 1234
 
 ## Roles
 We talked about roles when registering users. Roles specify how privileged a user is. If the user is the admin denoted by a, they can carry out administrative actions like deleting or removing users, killing shell sessions, executing any commands, listing and deauthenticating users. Admin can do all these things by authenticating to the server using client.py which eliminates the need of entering the CLI mode. Another role that's defined in the server is regular user dnoted by r which allows the users to only execute commands other than the ones that contain kill, exit or any command substitution characters to prevent them from being able to kill the shell sessions. The reason for that is killing a session is an administrative task and can only be performed by an admin user. Regular user cannot do much more than that except for simple actions like listing shell sessions and swithcing between them. Our last role is guest denoted by d. The guest user basically cannot do anything but to list out shell sessions. That user is the lowest privileged user and should only be in the system to check if we popped any shells. If you're in an environment where you need to work with clients that are not really trusted, guest user is the best role for them.
+> a = admin
+> r = regular user
+> g = guest
 
 ## Encryption
 The entire communication between the client and the shellstation server is encrypted including the authentication request. When connecting to the server, the server shares a public RSA encryption key we are using to encrypt an AES symmetric key. The use of assymetric encyption to send a symmetric encryption key ensures a fast and secure way of encrypting the traffic and simulates a PGP like protocol. After the AES key has securely been transmitted to the server, both the client and the server starts using that key in order to communicate with each other. Thus, no plain text data is sent between client and the server. However, that doesnt ensure any encryption between our server and the malware agent. If you want to encrypt that traffic as well, the encryption code should be implemented when writing the malware.
@@ -31,25 +37,34 @@ If we dont send any command to the victim and the connection between the server 
 
 ## Registering in server mode
 As mentioned above administrator users can register clients without needing to enter cli mode. While registering the users, the following systax has to be used: register username password role. (Example: register admin admin a). The role can either be a, r or g (a=admin, r=regular user, g=guest).
- 
+> register alice p4ssw0rd r
+> register guesuser guestpass g
+
 ## Listing and deauthenticating connected clients
-Admin users can list out what clients are connected and deauthenicate them very easily. The command "list" is used to display all the connected clients. If one client needs to be deauthenicated, the command "deauth client_name" is used. (Example: deauth john)
+Admin users can list out what clients are connected and deauthenicate them very easily. The command "clients" is used to display all the connected clients. If one client needs to be deauthenicated, the command "deauth client_name" is used.
+> clients (get a list of clients)
+> deauth john (disconnect john)
 
 ## Removing clients
 If a client should no longer be able to authenticate to the server, only the admin user can remove it. The syntax to remove a client is as follows: remove client_name. (Example: remove john) This usage of the command is the same for both server and cli mode.
+> remove john
 
 ## Listing all the active sessions
 In order to get a listing for what sessions are available, type the command "sessions". It displays all the active sessions. The format of the output contains a session id followed by the IP address and the port of the connecting client
+> sessions
 
 ## Interacting with the sessions
-After getting a listing for the active sessions and their IDs, we can use "interact session_id" command to interact with a session. After running this command we can execute commands on the victim's system. Example (interact 5)
+After getting a listing for the active sessions and their IDs, we can use "interact session_id" command to interact with a session. After running this command we can execute commands on the victim's system.
+> interact 5
 
 ## Confirm and disconfirm
 In real life situations, scanners and other automated tools might possible connect to the listen port of the shellstation server which will be displayed as an active session when you run the sessions command. When you run confirm along with a sessio ID (confirm 4), a green plus sign get printed right next to the specified session every time you run sessions command. That allows users to mark the real sessions and differentiate them from the scanner's connections. The connections established by scanners wont be responsive anyways. The can manually be detected easily and killed using the kill command. In order to undo a confirm operation, disconfirm should be used with the session ID in the same manner.
+> confirm 4
+> disconfirm 4
 
 ## Exitting
 In order to disconnect from the server and exit out of the client.py program, run exit.
-
+> exit
 
 # CLI Mode
 CLI is the mode where all the sessions can be managed from the command line interface. If the program is run without supplying any options, it will run in CLI mode. There are specific commands we can run to manage our sesssions which are listed below.
