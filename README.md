@@ -5,6 +5,13 @@
 
 Shellstation is a C2 (coomand and control) tool for managing malware sessions. First off, this does not give any clue about how to write a malwar, it only acts as a listener with many functionalities. The main use of shellstation is to handle shell sessions from multiple victims even if they come at the same time and be able to switch between those sessions easily. The most powerful side of this tool is that it can operate in two different modes: cli mode and server mode.
 
+# Dependencies
+This tool is meant to run on a linux system and it depends on the python library pycryptodome to run smoothly. Please make sure you install that library with the following command:
+> pip install pycryptodome
+OR
+> pip3 install pycrpytodome
+It should also be noted that shellstation is coded in python3.
+
 # Server mode
 
 Server mode is the mode where the tool can be placed in a public server to listen for connections 24/7. When started in server mode the program binds to two local ports. One of them is for authentication where a client will connect to the server to manage the shell sessions after supplying the credentials and the other is to deploy the listener that our malware will connect back to. In order to start the program in server mode, two command line options need to be supplied: -p and -l. The -p option specifies the port where authentication by the client will be handled and the -l option tells shellstation which port to deploy the listener on.
