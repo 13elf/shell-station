@@ -13,7 +13,7 @@ NOTE: All the commands explained in server mode section can be run after a succe
 
 ## How to register a client
 We previously taked about authentication. Before authentication can take place, there needs to be some clients already registered in our server. In order to register a client, the program should be started in CLI mode (explained below) and register command needs to be run. The rest of this process is straightforward. The program asks for a username, password and the role of the client. After registering the client, a file called database will be created where the username, sha256 hash of the password and the role of the client is present. As more clients are added, new lines get written to the file. Aside from doing this in cli mode, it can also be done through an admin user after a successful authentication. However if it's your first time and you dont have any users, you should create the user using cli mode.
-> register jhon mystrongpass a (server mode)
+> register jhon mystrongpass a (server mode) <BR>
 > register (cli mode, interactive)
 
 ## How to connect to the server
@@ -22,8 +22,8 @@ The script named "client.py" peforms authentication to the server. This script t
 
 ## Roles
 We talked about roles when registering users. Roles specify how privileged a user is. If the user is the admin denoted by a, they can carry out administrative actions like deleting or removing users, killing shell sessions, executing any commands, listing and deauthenticating users. Admin can do all these things by authenticating to the server using client.py which eliminates the need of entering the CLI mode. Another role that's defined in the server is regular user dnoted by r which allows the users to only execute commands other than the ones that contain kill, exit or any command substitution characters to prevent them from being able to kill the shell sessions. The reason for that is killing a session is an administrative task and can only be performed by an admin user. Regular user cannot do much more than that except for simple actions like listing shell sessions and swithcing between them. Our last role is guest denoted by d. The guest user basically cannot do anything but to list out shell sessions. That user is the lowest privileged user and should only be in the system to check if we popped any shells. If you're in an environment where you need to work with clients that are not really trusted, guest user is the best role for them.
-> a = admin
-> r = regular user
+> a = admin<BR>
+> r = regular user<BR>
 > g = guest
 
 ## Encryption
@@ -37,12 +37,12 @@ If we dont send any command to the victim and the connection between the server 
 
 ## Registering in server mode
 As mentioned above administrator users can register clients without needing to enter cli mode. While registering the users, the following systax has to be used: register username password role. (Example: register admin admin a). The role can either be a, r or g (a=admin, r=regular user, g=guest).
-> register alice p4ssw0rd r
+> register alice p4ssw0rd r<BR>
 > register guesuser guestpass g
 
 ## Listing and deauthenticating connected clients
 Admin users can list out what clients are connected and deauthenicate them very easily. The command "clients" is used to display all the connected clients. If one client needs to be deauthenicated, the command "deauth client_name" is used.
-> clients (get a list of clients)
+> clients (get a list of clients)<BR>
 > deauth john (disconnect john)
 
 ## Removing clients
@@ -59,7 +59,7 @@ After getting a listing for the active sessions and their IDs, we can use "inter
 
 ## Confirm and disconfirm
 In real life situations, scanners and other automated tools might possible connect to the listen port of the shellstation server which will be displayed as an active session when you run the sessions command. When you run confirm along with a sessio ID (confirm 4), a green plus sign get printed right next to the specified session every time you run sessions command. That allows users to mark the real sessions and differentiate them from the scanner's connections. The connections established by scanners wont be responsive anyways. The can manually be detected easily and killed using the kill command. In order to undo a confirm operation, disconfirm should be used with the session ID in the same manner.
-> confirm 4
+> confirm 4<BR>
 > disconfirm 4
 
 ## Exitting
