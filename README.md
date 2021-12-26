@@ -3,7 +3,7 @@
 
 # Description
 
-Shellstation is a C2 (command and control) tool for managing malware sessions. First off, this does not give any clue about how to write a malwar, it only acts as a listener with many functionalities. The main use of shellstation is to handle shell sessions from multiple victims even if they come at the same time and be able to switch between those sessions easily. The most powerful side of this tool is that it can operate in two different modes: cli mode and server mode.
+Shellstation is a C2 (command and control) tool for managing malware sessions. First off, this does not give any clue about how to write a malware, it only acts as a listener with many functionalities. The main use of shellstation is to handle shell sessions from multiple victims even if they come at the same time and be able to switch between those sessions easily. The most powerful side of this tool is that it can operate in two different modes: cli mode and server mode.
 
 # Dependencies
 This tool is meant to run on a linux system and it depends on the python library pycryptodome to run smoothly. Please make sure you install that library with the following command:
