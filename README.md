@@ -8,6 +8,7 @@ Shellstation is a C2 (coomand and control) tool for managing malware sessions. F
 # Server mode
 
 Server mode is the mode where the tool can be placed in a public server to listen for connections 24/7. When started in server mode the program binds to two local ports. One of them is for authentication where a client will connect to the server to manage the shell sessions after supplying the credentials and the other is to deploy the listener that our malware will connect back to. In order to start the program in server mode, two command line options need to be supplied: -p and -l. The -p option specifies the port where authentication by the client will be handled and the -l option tells shellstation which port to deploy the listener on.
+> python3 shellstation.py -p 1234 -l 80
 
 NOTE: All the commands explained in server mode section can be run after a successful authentication to the server
 
@@ -68,6 +69,7 @@ In order to disconnect from the server and exit out of the client.py program, ru
 
 # CLI Mode
 CLI is the mode where all the sessions can be managed from the command line interface. If the program is run without supplying any options, it will run in CLI mode. There are specific commands we can run to manage our sesssions which are listed below.
+> python3 shellstation.py
 
 ## Listening for incoming sessions
 The command "listen" is used for binding to a local port for incoming connections. The syntax is the command "listen" followed by the port to listen on. There's also the "-b" switch that can be used in conjunction with listen to start the listener in the background so that more than one incoming session can be caught at a time.
