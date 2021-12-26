@@ -38,10 +38,10 @@ We talked about roles when registering users. Roles specify how privileged a use
 > g = guest
 
 ## Encryption
-The entire communication between the client and the shellstation server is encrypted including the authentication request. When connecting to the server, the server shares a public RSA encryption key we are using to encrypt an AES symmetric key. The use of assymetric encyption to send a symmetric encryption key ensures a fast and secure way of encrypting the traffic and simulates a PGP like protocol. After the AES key has securely been transmitted to the server, both the client and the server starts using that key in order to communicate with each other. Thus, no plain text data is sent between client and the server. However, that doesnt ensure any encryption between our server and the malware agent. If you want to encrypt that traffic as well, the encryption code should be implemented when writing the malware.
+The entire communication, including the authentication request, between the client and the shellstation server is encrypted. When connecting to the server, the server shares a public RSA encryption key we are using to encrypt an AES symmetric key. The use of assymetric encyption to send a symmetric encryption key ensures a fast and secure way of encrypting the traffic and simulates a PGP like protocol. After the AES key has securely been transmitted to the server, both the client and the server starts using that key in order to communicate with each other. Thus, no plain text data is sent between client and the server. However, that doesnt ensure any encryption between our server and the malware agent. If you want to encrypt that traffic as well, the encryption code should be implemented when writing the malware.
 
 ## Logging
-Most of the operations performed by the clients get logged into the terminal screen as well as being written to a log file named "log". The format of the logs is a timestamp followed by the log onformation. Log file only gets created in server mode
+Most of the operations performed by the clients get logged into the terminal screen as well as being written to a log file named "log". The format of the logs is a timestamp followed by the log information. Log file only gets created in server mode
 
 ## Keepalive
 If we dont send any command to the victim and the connection between the server and the malware agent stays idle for more than 120 senconds, the shellstation server sends some keepalive data every 120 seconds to the malware agent to keep the session alive. This is especially useful in some environments where the firewall might be terminating connections if they stay idle for too long.
@@ -57,7 +57,7 @@ Admin users can list out what clients are connected and deauthenicate them very 
 > deauth john (disconnect john)
 
 ## Removing clients
-If a client should no longer be able to authenticate to the server, only the admin user can remove it. The syntax to remove a client is as follows: remove client_name. (Example: remove john) This usage of the command is the same for both server and cli mode.
+If a client should no longer be able to authenticate to the server, only the admin user can remove it. The syntax to remove a client is as follows: remove client_name. This usage of the command is the same for both server and cli mode.
 > remove john
 
 ## Listing all the active sessions
@@ -68,10 +68,11 @@ In order to get a listing for what sessions are available, type the command "ses
 After getting a listing for the active sessions and their IDs, we can use "interact session_id" command to interact with a session. After running this command we can execute commands on the victim's system.
 > interact 5
 
-## Confirm and disconfirm
-In real life situations, scanners and other automated tools might possible connect to the listen port of the shellstation server which will be displayed as an active session when you run the sessions command. When you run confirm along with a sessio ID (confirm 4), a green plus sign get printed right next to the specified session every time you run sessions command. That allows users to mark the real sessions and differentiate them from the scanner's connections. The connections established by scanners wont be responsive anyways. The can manually be detected easily and killed using the kill command. In order to undo a confirm operation, disconfirm should be used with the session ID in the same manner.
+## Confirm, disconfirm and kill
+In real life situations, scanners and other automated tools might possibly connect to the listen port of the shellstation server which will be displayed as an active session when you run the sessions command. When you run confirm along with a sessio ID (confirm 4), a green plus sign get printed right next to the specified session every time you run sessions command. That allows users to mark the real sessions and differentiate them from the scanner's connections. The connections established by scanners wont be responsive anyways. The can manually be detected easily and killed using the kill command. The kill command must be given a session id to kill. Also, in order to undo a confirm operation, disconfirm should be used with the session ID in the same manner.
 > confirm 4<BR>
-> disconfirm 4
+> disconfirm 4<BR>
+> kill 5
 
 ## Exitting
 In order to disconnect from the server and exit out of the client.py program, run exit.
